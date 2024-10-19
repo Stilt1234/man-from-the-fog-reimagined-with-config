@@ -1,3 +1,19 @@
+
+NOTE - THIS IS A FORKED REPOSITORY OF THE ORIGINAL MOD (I took permission from the creator)
+
+This mod just increases the attack and health of the man by changing just a few properties. It is recommended to use this
+mod with gun mods like tacz or mods which add one shot weapons or something idk (this mod was intended for tacz anyways).
+
+
+
+
+
+
+
+
+
+
+
 # Man From The Fog
 Mod which adds a creepy creature, which stalks you in the night and preys on you.
 ## What does it do?

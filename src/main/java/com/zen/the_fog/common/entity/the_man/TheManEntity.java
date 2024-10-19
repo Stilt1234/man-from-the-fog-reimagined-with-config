@@ -63,7 +63,7 @@ public class TheManEntity extends HostileEntity implements GeoEntity {
     public static final EntityDimensions CROUCH_HITBOX_SIZE = EntityDimensions.fixed(0.8f, 1.3f);
     public static final EntityDimensions CRAWL_HITBOX_SIZE = EntityDimensions.fixed(0.8f, 0.8f);
 
-    public static final double MAN_SPEED = 0.48;
+    public static final double MAN_SPEED = 0.5; // Stilt - Changed Attribute
     public static final double MAN_CLIMB_SPEED = 0.7;
     public static final double MAN_MAX_SCAN_DISTANCE = 10000.0;
     public static final double MAN_BLOCK_CHANCE = 0.25;
@@ -208,13 +208,14 @@ public class TheManEntity extends HostileEntity implements GeoEntity {
     }
 
     /* Attributes */
+    // Stilt - Changed Attributes
     public static DefaultAttributeContainer.Builder createManAttributes() {
         return TheManEntity.createHostileAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH,420)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH,100000) // Stilt - Changed Attribute
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED,MAN_SPEED)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE,5.5)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE,100.0) // Stilt - Changed Attribute
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK,3.5)
-                .add(EntityAttributes.GENERIC_ATTACK_SPEED,0.35)
+                .add(EntityAttributes.GENERIC_ATTACK_SPEED,10) // Stilt - Changed Attribute
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE,MAN_MAX_SCAN_DISTANCE)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,100)
                 .add(EntityAttributes.GENERIC_ARMOR,7)
@@ -248,7 +249,7 @@ public class TheManEntity extends HostileEntity implements GeoEntity {
     protected void initDataTracker() {
         super.initDataTracker();
 
-        this.getDataTracker().startTracking(TheManDataTrackers.SHIELD_HEALTH, 50f);
+        this.getDataTracker().startTracking(TheManDataTrackers.SHIELD_HEALTH, 1000f); // Stilt - Changed Attribute
         this.getDataTracker().startTracking(TheManDataTrackers.CLIMBING,false);
         this.getDataTracker().startTracking(TheManDataTrackers.CROUCHING,false);
         this.getDataTracker().startTracking(TheManDataTrackers.CRAWLING,false);
