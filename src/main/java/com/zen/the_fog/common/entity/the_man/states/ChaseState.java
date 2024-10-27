@@ -78,7 +78,8 @@ public class ChaseState extends AbstractState {
                 }
 
                 player.getHungerManager().add(1,1);
-                player.setSprinting(true);
+                // Commented this cuz the guns dont work if a player is sprinting
+                // player.setSprinting(true);
             }
         }
 

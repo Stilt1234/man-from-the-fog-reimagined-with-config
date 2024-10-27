@@ -36,6 +36,16 @@ repositories {
 	}
 
 	maven {url = "https://maven.kyrptonaught.dev"}
+
+	// Stilt - Added TACZ as a dependency
+	maven {
+        // Add curse maven to repositories
+        name = "Curse Maven"
+        url = "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 fabricApi {
@@ -57,6 +67,9 @@ dependencies {
 	include 'net.kyrptonaught:customportalapi:0.0.1-beta64-1.20'
 
 	implementation("com.eliotlash.mclib:mclib:20")
+
+	// Stilt - Added TACZ as a dependency
+	implementation('curse.maven:timeless-and-classics-zero-1028108:5529117-sources-5529578')
 }
 
 processResources {

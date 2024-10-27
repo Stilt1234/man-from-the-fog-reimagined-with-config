@@ -47,6 +47,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Math;
+
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -59,6 +61,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class TheManEntity extends HostileEntity implements GeoEntity {
+
+    com.tacz.guns.init.ModDamageTypes taczDamageSources = new com.tacz.guns.init.ModDamageTypes();
+
     public static final EntityDimensions HITBOX_SIZE = EntityDimensions.fixed(0.8f, 2.3f);
     public static final EntityDimensions CROUCH_HITBOX_SIZE = EntityDimensions.fixed(0.8f, 1.3f);
     public static final EntityDimensions CRAWL_HITBOX_SIZE = EntityDimensions.fixed(0.8f, 0.8f);
@@ -211,15 +216,13 @@ public class TheManEntity extends HostileEntity implements GeoEntity {
     // Stilt - Changed Attributes
     public static DefaultAttributeContainer.Builder createManAttributes() {
         return TheManEntity.createHostileAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH,100000) // Stilt - Changed Attribute
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED,MAN_SPEED)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH,10) // Stilt - Changed Attribute
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.00001)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE,100.0) // Stilt - Changed Attribute
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK,3.5)
                 .add(EntityAttributes.GENERIC_ATTACK_SPEED,10) // Stilt - Changed Attribute
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE,MAN_MAX_SCAN_DISTANCE)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,100)
-                .add(EntityAttributes.GENERIC_ARMOR,7)
-                .add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS,5);
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,100);
     }
 
     /* States */
@@ -249,7 +252,7 @@ public class TheManEntity extends HostileEntity implements GeoEntity {
     protected void initDataTracker() {
         super.initDataTracker();
 
-        this.getDataTracker().startTracking(TheManDataTrackers.SHIELD_HEALTH, 1000f); // Stilt - Changed Attribute
+        this.getDataTracker().startTracking(TheManDataTrackers.SHIELD_HEALTH, 5f); // Stilt - Changed Attribute
         this.getDataTracker().startTracking(TheManDataTrackers.CLIMBING,false);
         this.getDataTracker().startTracking(TheManDataTrackers.CROUCHING,false);
         this.getDataTracker().startTracking(TheManDataTrackers.CRAWLING,false);
@@ -634,14 +637,17 @@ public class TheManEntity extends HostileEntity implements GeoEntity {
             return false;
         }
 
-        if (this.hasShield()) {
-            this.damageShield(amount);
+        if (this.hasShield() && (source.getName().contains("bullet") || source.getName().contains("bullet_ignore_armour") 
+        || source.getName().contains("bullet_void") || source.getName().contains("bullet_void_ignore_armour"))) {
+            if (this.getTarget() == null)
+            {
+                this.damageShield(amount);
+            }
+            else
+            {
+                this.damageShield(amount);
+            }
             return true;
-        }
-
-        if (source.getName().contains("bullet")) {
-            this.blockDamage(source);
-            return false;
         }
 
         if (Util.isNight(this.getWorld())) {
@@ -672,7 +678,23 @@ public class TheManEntity extends HostileEntity implements GeoEntity {
             this.aliveTicks += 10;
         }
 
-        return super.damage(source, amount);
+        if (source.getName().contains("bullet") || source.getName().contains("bullet_ignore_armour") 
+            || source.getName().contains("bullet_void") || source.getName().contains("bullet_void_ignore_armour")) {
+            if (this.getTarget() == null)
+            {
+                super.damage(source, amount);
+            }
+            else
+            {
+                super.damage(source, amount);
+            }
+            return true;
+        }
+
+        // Stilt - commented to not return any damage from any other sources except bullet
+        // return super.damage(source, amount);
+        this.blockDamage(source);
+        return false;
     }
 
     public void addStatusEffects() {
