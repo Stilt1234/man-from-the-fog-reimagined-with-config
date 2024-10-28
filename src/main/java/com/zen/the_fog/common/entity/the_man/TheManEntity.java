@@ -212,12 +212,12 @@ public class TheManEntity extends HostileEntity implements GeoEntity {
         return mobNavigation;
     }
 
-    /* Attributes */
+    /* Default Attributes */
     // Stilt - Changed Attributes
     public static DefaultAttributeContainer.Builder createManAttributes() {
         return TheManEntity.createHostileAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH,10) // Stilt - Changed Attribute
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.00001)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH,100000) // Stilt - Changed Attribute
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5) // Stilt - Changed Attribute
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE,100.0) // Stilt - Changed Attribute
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK,3.5)
                 .add(EntityAttributes.GENERIC_ATTACK_SPEED,10) // Stilt - Changed Attribute
